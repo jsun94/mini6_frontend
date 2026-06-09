@@ -150,7 +150,7 @@ export default function BookListPage() {
   async function handleDelete(id) {
     try {
       await deleteBook(id)
-      setBooks(prev => prev.filter(b => b.id !== String(id)))
+      setBooks(prev => prev.filter(b => b.id !== id))
     } catch {
       alert('삭제에 실패했습니다.')
     }

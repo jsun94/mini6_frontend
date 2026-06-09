@@ -3,7 +3,7 @@
   "private": true,
   "version": "1.0.0",
   "scripts": {
-    "dev": "concurrently \"npm run server\" \"npm run bestseller\" \"vite\"",
+    "dev": "concurrently \"npm run bestseller\" \"vite\"",
     "server": "json-server --watch db.json --port 3000",
     "bestseller": "node api/bestseller.js",
     "build": "vite build"

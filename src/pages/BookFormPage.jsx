@@ -23,6 +23,7 @@ export default function BookFormPage() {
   const [loading, setLoading] = useState(isEdit)
   const [saving,  setSaving]  = useState(false)
   const [errors,  setErrors]  = useState({})
+  const [serverError, setServerError] = useState('')
 
   // Load existing book when editing
   useEffect(() => {
@@ -49,7 +50,8 @@ export default function BookFormPage() {
   }
 
   async function handleSubmit() {
-    if (!validate()) return
+    if (!validate()) return     // backend error msg 확인 필요 시 해당 코드 한 줄 주석처리
+    setServerError('')
     setSaving(true)
     try {
       if (isEdit) {
@@ -59,10 +61,10 @@ export default function BookFormPage() {
         const created = await createBook(form)
         navigate(`/books/${created.id}`)
       }
-    } catch {
-      alert('저장에 실패했습니다.')
+    } catch(err) {
+        setServerError(err.message || '저장 중 오류가 발생했습니다.')
     } finally {
-      setSaving(false)
+        setSaving(false)
     }
   }
 
@@ -74,13 +76,27 @@ export default function BookFormPage() {
         {isEdit ? '도서 수정' : '새 도서 등록'}
       </h2>
 
+      {serverError && (
+        <div style={{
+            marginBottom: '16px',
+            padding: '12px 14px',
+            borderRadius: '8px',
+            background: '#ffebee',
+            color: '#c62828',
+            fontSize: '14px',
+            fontWeight: 600
+        }}>
+            {serverError}
+        </div>
+      )}
+
       {/* Title */}
       <div style={fieldGroup}>
         <label style={labelStyle}>제목</label>
         <input
           type="text"
           value={form.title}
-          onChange={e => { setForm(p => ({ ...p, title: e.target.value })); setErrors(p => ({ ...p, title: '' })) }}
+          onChange={e => { setForm(p => ({ ...p, title: e.target.value })); setErrors(p => ({ ...p, title: '' })); setServerError('') }}
           placeholder="도서 제목을 입력하세요"
           style={{ ...inputStyle, borderColor: errors.title ? '#e53935' : '#ccc' }}
         />
@@ -92,7 +108,7 @@ export default function BookFormPage() {
         <label style={labelStyle}>내용</label>
         <textarea
           value={form.description}
-          onChange={e => { setForm(p => ({ ...p, description: e.target.value })); setErrors(p => ({ ...p, description: '' })) }}
+          onChange={e => { setForm(p => ({ ...p, description: e.target.value })); setErrors(p => ({ ...p, description: '' })); setServerError('') }}
           placeholder="도서의 내용을 입력하세요"
           rows={7}
           style={{ ...inputStyle, resize: 'vertical', borderColor: errors.description ? '#e53935' : '#ccc' }}

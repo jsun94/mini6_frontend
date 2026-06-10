@@ -9,11 +9,24 @@ async function request(url, options = {}) {
     headers: { 'Content-Type': 'application/json' },
     ...options,
   })
-  if (!res.ok) {
-    const text = await res.text()
-    throw new Error(text || `HTTP ${res.status}`)
-  }
+
   const text = await res.text()
+
+  if (!res.ok) {
+    let message = `HTTP ${res.status}`
+
+    try {
+        const errorData = text ? JSON.parse(text) : null
+        message = errorData?.message || message
+    } catch {
+        message = text || message
+    }
+
+    throw new Error(message)
+
+    //throw new Error(text || `HTTP ${res.status}`)
+  }
+  
   return text ? JSON.parse(text) : {}
 }
 

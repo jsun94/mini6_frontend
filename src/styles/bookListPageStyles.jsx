@@ -204,6 +204,15 @@ export const badgePrimary = {
 
 export const badgeSecondary = {
   fontSize: '10px',
+  background: '#e3fae3',
+  color: '#1ca53e',
+  padding: '2px 7px',
+  borderRadius: '20px',
+  fontWeight: 600,
+}
+
+export const badgeTertiary = {
+  fontSize: '10px',
   background: '#f5f5f5',
   color: '#999',
   padding: '2px 7px',

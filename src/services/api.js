@@ -176,7 +176,7 @@ export async function generateCover({ apiKey, model, quality, title, description
 
   // ⑤ bookId가 주어지면 json-server의 해당 도서에 coverImageUrl만 PATCH
   if (bookId) {
-    await updateBookCover(bookId, imageSrc)
+    return await updateBookCover(bookId, imageSrc)
     // await request(`${BASE}/books/${bookId}`, {
     //   method: 'PATCH',
     //   body: JSON.stringify({

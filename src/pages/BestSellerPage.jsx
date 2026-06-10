@@ -154,6 +154,7 @@ export default function BestsellerPage() {
             .filter(Boolean)
             .join('\n'),
             coverImageUrl: book.cover || null,
+            coverType: book.cover ? 'EXTERNAL' : 'NONE',
             favorite: false,
         })
 

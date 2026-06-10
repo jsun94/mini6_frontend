@@ -119,10 +119,12 @@ export default function BookDetailPage() {
         quality,
         title: book.title,
         description: book.description,
+        bookId: id,
       })
 
-      await updateBook(id, { coverImageUrl: imageUrl })
-      setBook(prev => ({ ...prev, coverImageUrl: imageUrl }))
+      setBook(imageUrl)
+    //   await updateBook(id, { coverImageUrl: imageUrl })
+    //   setBook(prev => ({ ...prev, coverImageUrl: imageUrl, coverType: 'AI' }))
       showToast('표지가 생성되었습니다! 🎨')
     } catch (err) {
       setGenError(err.message)

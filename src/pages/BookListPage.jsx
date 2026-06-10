@@ -8,7 +8,7 @@ import {
   errorBox, emptyState, emptyIcon, emptyHeading, emptyDescription, emptyButton, noResultButton,
   grid, card, cardNormal, cardHovered,
   coverWrapper, coverImg, placeholderWrapper, placeholderIcon, placeholderText,
-  infoWrapper, infoTitle, infoDesc, infoFooter, dateText, badgePrimary, badgeSecondary,
+  infoWrapper, infoTitle, infoDesc, infoFooter, dateText, badgePrimary, badgeSecondary, badgeTertiary,
   overlay, overlayBtn,
 } from '../styles/bookListPageStyles'
 
@@ -99,8 +99,12 @@ function BookCard({ book, query, onDelete, onToggleFavorite }) {
         <div style={infoFooter}>
           <span style={dateText}>{new Date(book.createdAt).toLocaleDateString('ko-KR')}</span>
           {book.coverImageUrl
+            ? (
+                book.coverType === 'AI'
             ? <span style={badgePrimary}>AI 표지</span>
-            : <span style={badgeSecondary}>표지 없음</span>
+            : <span style={badgeSecondary}>도서 표지</span>
+            )
+            : <span style={badgeTertiary}>표지 없음</span>
           }
         </div>
       </div>

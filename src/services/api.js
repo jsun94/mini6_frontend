@@ -53,6 +53,12 @@ export const updateBook = (id, data) =>
     body: JSON.stringify({ ...data, updatedAt: new Date().toISOString() }),
   })
 
+export const updateBookCover = (id, coverImageUrl) =>
+    request(`${BASE}/books/${id}/cover`, {
+        method: 'PATCH',
+        body: JSON.stringify({ coverImageUrl }),
+    })
+
 export const deleteBook = (id) =>
   request(`${BASE}/books/${id}`, { method: 'DELETE' })
 
@@ -137,13 +143,14 @@ export async function generateCover({ apiKey, model, quality, title, description
 
   // ⑤ bookId가 주어지면 json-server의 해당 도서에 coverImageUrl만 PATCH
   if (bookId) {
-    await request(`${BASE}/books/${bookId}`, {
-      method: 'PATCH',
-      body: JSON.stringify({
-        coverImageUrl: imageSrc,
-        updatedAt: new Date().toISOString(),
-      }),
-    })
+    await updateBookCover(bookId, ImageSrc)
+    // await request(`${BASE}/books/${bookId}`, {
+    //   method: 'PATCH',
+    //   body: JSON.stringify({
+    //     coverImageUrl: imageSrc,
+    //     updatedAt: new Date().toISOString(),
+    //   }),
+    // })
   }
 
   return imageSrc

@@ -11,10 +11,10 @@ const BASE = isProduction ? 'http://54.177.72.135:8080/api' : '/api';
 
 
 async function request(url, options = {}) {
-  const res = await fetch(url, {
+  const defaultOptions = {
     headers: { 'Content-Type': 'application/json' },
     ...options,
-  })
+  };
 
 //aws
   defaultOptions.credentials = 'include';

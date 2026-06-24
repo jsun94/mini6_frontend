@@ -42,7 +42,7 @@
 //  return text ? JSON.parse(text) : {}
 //}
 ////////aws
-const BASE = 'http://54.177.72.135:8080/api';
+const BASE = 'http://class03-07-loadbalancer-1366796970.us-west-1.elb.amazonaws.com/api';
 
 async function request(url, options = {}) {
   const defaultOptions = {

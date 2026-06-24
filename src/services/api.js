@@ -2,13 +2,23 @@
 //  - Local dev : proxied by Vite to http://localhost:3001 (api/server.js)
 //  - Vercel    : handled by api/server.js serverless function
 
-const BASE = '/api'
+//original
+//const BASE = '/api'
+
+//aws
+const isProduction = import.meta.env.PROD;
+const BASE = isProduction ? 'http://54.177.72.135:8080/api' : '/api';
+
 
 async function request(url, options = {}) {
   const res = await fetch(url, {
     headers: { 'Content-Type': 'application/json' },
     ...options,
   })
+
+//aws
+  defaultOptions.credentials = 'include';
+  const res = await fetch(url, defaultOptions)
 
   const text = await res.text()
 

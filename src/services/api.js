@@ -6,9 +6,43 @@
 //const BASE = '/api'
 
 //aws
-const isProduction = import.meta.env.PROD;
-const BASE = isProduction ? 'http://54.177.72.135:8080/api' : '/api';
-
+//const isProduction = import.meta.env.PROD;
+//
+//// ⚠️ 만약 isProduction이 어떤 이유로든 false라면 그냥 '/api'가 되어 자기 자신에게 요청합니다.
+//const BASE = isProduction ? 'http://54.177.72.135:8080/api' : '/api';
+//
+//
+//async function request(url, options = {}) {
+//  const defaultOptions = {
+//    headers: { 'Content-Type': 'application/json' },
+//    ...options,
+//  };
+//
+////aws
+//  defaultOptions.credentials = 'include';
+//  const res = await fetch(url, defaultOptions)
+//
+//  const text = await res.text()
+//
+//  if (!res.ok) {
+//    let message = `HTTP ${res.status}`
+//
+//    try {
+//        const errorData = text ? JSON.parse(text) : null
+//        message = errorData?.message || message
+//    } catch {
+//        message = text || message
+//    }
+//
+//    throw new Error(message)
+//
+//    //throw new Error(text || `HTTP ${res.status}`)
+//  }
+//
+//  return text ? JSON.parse(text) : {}
+//}
+////////aws
+const BASE = 'http://54.177.72.135:8080/api';
 
 async function request(url, options = {}) {
   const defaultOptions = {
@@ -16,29 +50,26 @@ async function request(url, options = {}) {
     ...options,
   };
 
-//aws
+  // 세션 쿠키 연동 설정
   defaultOptions.credentials = 'include';
-  const res = await fetch(url, defaultOptions)
 
-  const text = await res.text()
+  const res = await fetch(url, defaultOptions);
+  const text = await res.text();
 
   if (!res.ok) {
-    let message = `HTTP ${res.status}`
-
+    let message = `HTTP ${res.status}`;
     try {
-        const errorData = text ? JSON.parse(text) : null
-        message = errorData?.message || message
+        const errorData = text ? JSON.parse(text) : null;
+        message = errorData?.message || message;
     } catch {
-        message = text || message
+        message = text || message;
     }
-
-    throw new Error(message)
-
-    //throw new Error(text || `HTTP ${res.status}`)
+    throw new Error(message);
   }
-  
-  return text ? JSON.parse(text) : {}
+
+  return text ? JSON.parse(text) : {};
 }
+////////aws
 
 function getMemberName() {
     return localStorage.getItem('memberName')
